@@ -1,16 +1,17 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Experimental.PlayerLoop;
-using UnityEngine.Serialization;
-using Debug = UnityEngine.Debug;
+using UnityEngine.UI;
 
 public class Day1 : MonoBehaviour
 {
-    public TextMeshProUGUI text;
+    public TextMeshProUGUI consoleText;
+    public Slider fuelSlider;
+    public Slider massSlider;
+    public TextMeshProUGUI fuelText;
+    public TextMeshProUGUI massText;
 
     private List<int> _modules = new List<int>
     {
@@ -122,7 +123,7 @@ public class Day1 : MonoBehaviour
 
     void Start()
     {
-        text.text = "...";
+        consoleText.text = "...";
         SetVertical(_textOffset);
 
         StartCoroutine(RunScroll());
@@ -140,31 +141,37 @@ public class Day1 : MonoBehaviour
     
     private IEnumerator RunPuzzle()
     {
-        var total = 0;
+        var totalFuel = 0;
+        var totalMass = 0;
         
         yield return new WaitForSeconds(3.0f / _speedScale);
         foreach (var module in _modules)
         {
             yield return new WaitForSeconds(0.2f / _speedScale);
-            text.text += $"\n{module} -> ";
+            consoleText.text += $"\n{module} -> ";
+            totalMass += module;
+            massSlider.value = totalMass;
+            massText.text = $"{totalMass:n0}";
+            
             yield return new WaitForSeconds(0.55f / _speedScale);
-
             var answer = (int) (Mathf.Floor(module / 3.0f)) - 2;
-            total += answer;
-            text.text += answer;
+            totalFuel += answer;
+            consoleText.text += answer;
+            fuelSlider.value = totalFuel;
+            fuelText.text = $"{totalFuel:n0}";
             
             _speedScale += 0.2f;
         }
         
         yield return new WaitForSeconds(1);
         
-        Debug.Log(total);
+        Debug.Log(totalFuel);
     }
 
     void SetVertical(float v)
     {
-        var r = text.rectTransform.anchoredPosition;
+        var r = consoleText.rectTransform.anchoredPosition;
         r.y = -v;
-        text.rectTransform.anchoredPosition = r;
+        consoleText.rectTransform.anchoredPosition = r;
     }
 }
