@@ -1,10 +1,12 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Experimental.PlayerLoop;
 using UnityEngine.Serialization;
+using Debug = UnityEngine.Debug;
 
 public class Day1 : MonoBehaviour
 {
@@ -144,15 +146,25 @@ public class Day1 : MonoBehaviour
     
     private IEnumerator RunPuzzle()
     {
+        var total = 0;
+        
         yield return new WaitForSeconds(3.0f / _speedScale);
         foreach (var module in _modules)
         {
             yield return new WaitForSeconds(0.2f / _speedScale);
             text.text += $"\n{module} -> ";
             yield return new WaitForSeconds(0.55f / _speedScale);
-            text.text += "yes!";
+
+            var answer = (int) (Mathf.Floor(module / 3.0f)) - 2;
+            total += answer;
+            text.text += answer;
+            
             _speedScale += 0.2f;
         }
+        
+        yield return new WaitForSeconds(1);
+        
+        Debug.Log(total);
     }
 
     void SetVertical(float v)
