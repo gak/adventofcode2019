@@ -11,7 +11,6 @@ using Debug = UnityEngine.Debug;
 public class Day1 : MonoBehaviour
 {
     public TextMeshProUGUI text;
-    public bool DebugMode;
 
     private List<int> _modules = new List<int>
     {
@@ -123,11 +122,6 @@ public class Day1 : MonoBehaviour
 
     void Start()
     {
-        if (DebugMode)
-        {
-            _speedScale = 1.0f;
-        }
-        
         text.text = "...";
         SetVertical(_textOffset);
 

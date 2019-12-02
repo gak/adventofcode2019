@@ -1000,7 +1000,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   text: {fileID: 1509712658}
-  DebugMode: 0
+  DebugMode: 1
 --- !u!1 &1913373077
 GameObject:
   m_ObjectHideFlags: 0
